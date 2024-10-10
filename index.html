@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vanilla JS Form Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Sample Form</h2>
+
+  <form id="myForm">
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name"><br>
+    <span id="nameError" class="error"></span><br>
+
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email"><br>
+    <span id="emailError" class="error"></span><br>
+
+    <label for="phone">Phone:</label><br>
+    <input type="tel" id="phone" name="phone"><br>
+    <span id="phoneError" class="error"></span><br>
+
+    <input type="submit" value="Submit">
+  </form>
+
+  <p id="successMessage" style="display: none; color: green;">Form submitted successfully!</p>
+
+  <script>
+    document.getElementById("myForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent form submission
+
+      // Clear previous errors
+      document.getElementById("nameError").textContent = "";
+      document.getElementById("emailError").textContent = "";
+      document.getElementById("phoneError").textContent = "";
+
+      // Get form field values
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      
+      let isValid = true;
+
+      // Name validation
+      if (name === "") {
+        document.getElementById("nameError").textContent = "Name is required";
+        isValid = false;
+      }
+
+      // Email validation
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        document.getElementById("emailError").textContent = "Please enter a valid email address";
+        isValid = false;
+      }
+
+      // Phone validation (e.g., simple pattern for a 10-digit number)
+      const phonePattern = /^\d{10}$/;
+      if (!phonePattern.test(phone)) {
+        document.getElementById("phoneError").textContent = "Please enter a 10-digit phone number";
+        isValid = false;
+      }
+
+      // If all fields are valid, show success message
+      if (isValid) {
+        document.getElementById("successMessage").style.display = "block";
+      } else {
+        document.getElementById("successMessage").style.display = "none";
+      }
+    });
+  </script>
+
+</body>
+</html>
